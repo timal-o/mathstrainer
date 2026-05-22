@@ -40,16 +40,6 @@ const MathsTrainer = {
       open: true,
       sections: [
         {
-          id: 'spe-arith',
-          label: 'Algèbre & Arithmétique',
-          open: true,
-          chapters: [
-            { id: 'pgcd',   label: 'PGCD — Algorithme d\'Euclide' },
-            { id: 'bezout', label: 'Théorème de Bézout — Remontée d\'Euclide' },
-            { id: 'gauss',  label: 'Lemme de Gauss — Équation au + bv = c' },
-          ],
-        },
-        {
           id: 'spe-analyse',
           label: 'Analyse',
           open: true,
@@ -72,8 +62,18 @@ const MathsTrainer = {
       label: 'Maths Expertes',
       sublabel: 'Option Terminale',
       icon: '🔢',
-      open: false,
+      open: true,
       sections: [
+        {
+          id: 'exp-arith',
+          label: 'Algèbre & Arithmétique',
+          open: true,
+          chapters: [
+            { id: 'pgcd',   label: 'PGCD — Algorithme d\'Euclide' },
+            { id: 'bezout', label: 'Théorème de Bézout — Remontée d\'Euclide' },
+            { id: 'gauss',  label: 'Lemme de Gauss — Équation au + bv = c' },
+          ],
+        },
         {
           id: 'exp-matrices',
           label: 'Matrices',
