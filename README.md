@@ -3,6 +3,8 @@
 Outil de révision interactif pour les lycéens de **Terminale** (et options).  
 Génère des exercices aléatoires avec correction détaillée, 100 % en local — aucune donnée envoyée, aucun serveur requis.
 
+🌐 **Documentation en ligne :** [mathstrainer.timalostudio.fr/wiki.html](https://mathstrainer.timalostudio.fr/wiki.html)
+
 ---
 
 ## ✨ Fonctionnalités
@@ -39,7 +41,8 @@ Génère des exercices aléatoires avec correction détaillée, 100 % en local �
 ## 🚀 Utilisation
 
 ### Lancer l'application
-Double-cliquer sur `index.html` — il s'ouvre directement dans le navigateur.
+1. [Télécharger le projet](https://github.com/timal-o/mathstrainer/archive/refs/heads/main.zip) et extraire le dossier
+2. Double-cliquer sur `index.html` — il s'ouvre directement dans le navigateur
 
 ### Ajouter un module (pour les profs)
 Deux méthodes :
@@ -52,7 +55,7 @@ Formulaire en 3 clics : sélectionner le fichier JS → choisir la spécialité 
 Le script crée automatiquement les dossiers, met à jour `registry.js` et `index.html`.
 
 **2. Méthode manuelle (VS Code)**  
-Voir [AJOUTER_MODULE.md](AJOUTER_MODULE.md) ou le [Wiki intégré](wiki.html).
+Voir [AJOUTER_MODULE.md](AJOUTER_MODULE.md) ou la [documentation en ligne](https://mathstrainer.timalostudio.fr/wiki.html).
 
 ### Créer un module avec l'IA
 Voir [GUIDE_PROF.md](GUIDE_PROF.md) — contient le mega-prompt prêt à copier dans ChatGPT ou Claude pour générer un module JS complet depuis une description pédagogique.
