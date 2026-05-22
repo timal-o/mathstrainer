@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wiki — Maths Trainer</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+    /* ── Sidebar nav ── */
+    #wiki-nav a { display: block; padding: 5px 12px; border-radius: 6px;
+                  font-size: 0.8rem; color: #475569; text-decoration: none;
+                  transition: background 120ms, color 120ms; }
+    #wiki-nav a:hover { background: #e2e8f0; color: #1e3a8a; }
+    #wiki-nav a.active { background: #dbeafe; color: #1d4ed8; font-weight: 600; }
+    #wiki-nav .nav-section { font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+                              letter-spacing: 0.1em; color: #94a3b8;
+                              padding: 10px 12px 4px; margin-top: 4px; }
+
+    /* ── Content ── */
+    .wiki-section { scroll-margin-top: 24px; }
+    h2.section-title {
+      font-size: 1.35rem; font-weight: 700; color: #1e3a8a;
+      border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-bottom: 20px;
+    }
+    h3.sub-title { font-size: 1.05rem; font-weight: 700; color: #1e40af; margin: 24px 0 10px; }
+    h4.mini-title { font-size: 0.9rem; font-weight: 700; color: #334155; margin: 16px 0 6px; }
+
+    p { color: #334155; line-height: 1.7; margin-bottom: 12px; font-size: 0.9rem; }
+    li { color: #334155; line-height: 1.7; font-size: 0.9rem; }
+
+    /* ── Steps ── */
+    .step-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.6em; height: 1.6em; background: #2563eb; color: white;
+      border-radius: 50%; font-size: 0.7rem; font-weight: 700; flex-shrink: 0;
+    }
+    .step-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+
+    /* ── Code blocks ── */
+    pre[class*="language-"] { font-size: 0.78rem !important; border-radius: 10px !important;
+                               margin: 12px 0 !important; }
+    code:not([class]) {
+      background: #f1f5f9; color: #be185d; padding: 1px 5px;
+      border-radius: 4px; font-size: 0.82em; font-family: 'Consolas', monospace;
+    }
+
+    /* ── Tables ── */
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 12px 0; }
+    th { background: #f1f5f9; color: #1e3a8a; font-weight: 700;
+         padding: 8px 12px; text-align: left; border: 1px solid #e2e8f0; }
+    td { padding: 7px 12px; border: 1px solid #e2e8f0; color: #334155; vertical-align: top; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    td code { font-size: 0.78em; }
+
+    /* ── Callouts ── */
+    .callout { border-left: 4px solid; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+    .callout.tip    { border-color: #10b981; background: #f0fdf4; }
+    .callout.warn   { border-color: #f59e0b; background: #fffbeb; }
+    .callout.info   { border-color: #3b82f6; background: #eff6ff; }
+    .callout.danger { border-color: #ef4444; background: #fef2f2; }
+    .callout strong { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .callout p      { margin: 4px 0 0; font-size: 0.85rem; }
+    .callout.tip    strong { color: #059669; }
+    .callout.warn   strong { color: #d97706; }
+    .callout.info   strong { color: #2563eb; }
+    .callout.danger strong { color: #dc2626; }
+
+    /* ── Result highlight demo ── */
+    .result-highlight {
+      display: inline-block; background: #fef9c3; border: 2px solid #eab308;
+      border-radius: 8px; padding: 4px 16px; margin-top: 6px;
+    }
+
+    /* ── Method card demo ── */
+    .method-demo { background: #eff6ff; border-left: 4px solid #3b82f6;
+                   border-radius: 0 8px 8px 0; padding: 12px 16px; }
+
+    /* ── Download button ── */
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #2563eb; color: white; padding: 10px 20px;
+      border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: background 150ms;
+    }
+    .dl-btn:hover { background: #1d4ed8; }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- ═══ HEADER ════════════════════════════════════════════════════════════ -->
+  <header class="bg-slate-800 text-white px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-lg">
+    <div class="flex items-center gap-4">
+      <span class="text-2xl">📐</span>
+      <div>
+        <div class="font-bold text-base leading-tight">Maths Trainer</div>
+        <div class="text-slate-400 text-xs">Documentation & Wiki</div>
+      </div>
+    </div>
+    <a href="index.html"
+       class="text-sm bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
+      ← Retour à l'appli
+    </a>
+  </header>
+
+  <div class="flex max-w-6xl mx-auto">
+
+    <!-- ═══ SIDEBAR NAV ══════════════════════════════════════════════════════ -->
+    <nav id="wiki-nav"
+         class="w-56 flex-shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto py-4 hidden lg:block">
+
+      <div class="nav-section">Démarrage rapide</div>
+      <a href="#apercu">Aperçu</a>
+      <a href="#outil-import">Outil d'import Python</a>
+      <a href="#nouvelle-specialite">Créer une classe</a>
+      <a href="#nouvelle-section">Créer une section</a>
+
+      <div class="nav-section">Créer un module</div>
+      <a href="#preparer">1. Préparer le contenu</a>
+      <a href="#mega-prompt">2. Mega-prompt IA</a>
+      <a href="#verifier">3. Vérifier le code</a>
+      <a href="#importer">4. Importer</a>
+      <a href="#tester">5. Tester</a>
+
+      <div class="nav-section">Méthode manuelle</div>
+      <a href="#manuel">VS Code — étape par étape</a>
+
+      <div class="nav-section">Référence technique</div>
+      <a href="#format-module">Format du module JS</a>
+      <a href="#engine-api">API Engine</a>
+      <a href="#latex">LaTeX dans JS</a>
+      <a href="#css-classes">Classes CSS</a>
+
+      <div class="nav-section">Aide</div>
+      <a href="#depannage">Dépannage</a>
+    </nav>
+
+    <!-- ═══ CONTENT ══════════════════════════════════════════════════════════ -->
+    <main class="flex-1 min-w-0 px-8 py-8 space-y-14">
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- APERÇU -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="apercu" class="wiki-section">
+        <h2 class="section-title">Aperçu de Maths Trainer</h2>
+
+        <p>
+          <strong>Maths Trainer</strong> est un outil de révision 100&nbsp;% local pour les lycéens de
+          Terminale. Il génère des exercices aléatoires à partir de <em>modules</em> écrits en JavaScript,
+          sans serveur ni connexion requise — il suffit d'ouvrir <code>index.html</code>.
+        </p>
+
+        <div class="grid grid-cols-3 gap-4 my-6 text-sm">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+            <div class="text-2xl mb-2">🗂️</div>
+            <div class="font-bold text-blue-800">Modules JS</div>
+            <div class="text-slate-500 text-xs mt-1">Un fichier par chapitre — génère des exercices aléatoires</div>
+          </div>
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+            <div class="text-2xl mb-2">🐍</div>
+            <div class="font-bold text-emerald-800">Script Python</div>
+            <div class="text-slate-500 text-xs mt-1">Importation en 3 clics sans toucher au code</div>
+          </div>
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+            <div class="text-2xl mb-2">🤖</div>
+            <div class="font-bold text-amber-800">IA + mega-prompt</div>
+            <div class="text-slate-500 text-xs mt-1">Génère le module JS depuis ta description</div>
+          </div>
+        </div>
+
+        <h3 class="sub-title">Structure du projet</h3>
+        <pre><code class="language-bash">Maths trainer/
+├── index.html              ← L'application (ouvrir dans le navigateur)
+├── wiki.html               ← Cette documentation
+├── import_module.py        ← Script d'import graphique (Python)
+├── assets/
+│   ├── css/style.css
+│   └── js/
+│       ├── engine.js       ← Utilitaires maths (randInt, gcd…)
+│       ├── registry.js     ← Arborescence sidebar (à modifier pour ajouter un chapitre)
+│       └── app.js          ← Logique Alpine.js
+└── modules/
+    ├── maths-spe/          ← Modules Terminale Spé
+    │   ├── pgcd.js
+    │   └── ...
+    └── maths-expertes/     ← Modules Maths Expertes
+        └── gauss-jordan.js</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- OUTIL PYTHON -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="outil-import" class="wiki-section">
+        <h2 class="section-title">Outil d'import Python</h2>
+
+        <p>
+          C'est la <strong>méthode recommandée</strong> pour les professeurs — pas besoin de
+          toucher au code. Le script Python affiche un formulaire graphique et effectue
+          automatiquement les trois modifications nécessaires.
+        </p>
+
+        <div class="my-6 flex items-center gap-4 flex-wrap">
+          <a href="import_module.py" download class="dl-btn">
+            ⬇ Télécharger import_module.py
+          </a>
+          <span class="text-slate-400 text-xs">Python 3 requis — gratuit sur python.org</span>
+        </div>
+
+        <h3 class="sub-title">Comment lancer le script</h3>
+
+        <div class="grid grid-cols-3 gap-4 text-sm my-4">
+          <div class="border border-slate-200 rounded-xl p-4">
+            <div class="text-xl mb-2">🚮 Windows</div>
+            <p class="text-xs">Double-clic sur <code>import_module.py</code><br>
+            (Python doit être installé avec <em>Add to PATH</em> coché)</p>
+          </div>
+          <div class="border border-slate-200 rounded-xl p-4">
+            <div class="text-xl mb-2">🍎 Mac</div>
+            <p class="text-xs">Clic droit → <em>Ouvrir avec → Python Launcher</em><br>
+            ou dans le Terminal : <code>python3 import_module.py</code></p>
+          </div>
+          <div class="border border-slate-200 rounded-xl p-4">
+            <div class="text-xl mb-2">🐧 Linux</div>
+            <p class="text-xs">Dans le Terminal :<br><code>python3 import_module.py</code></p>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          <strong>⚠ Important</strong>
+          <p>Le fichier <code>import_module.py</code> doit se trouver dans le dossier racine du projet
+          (le même dossier que <code>index.html</code>).</p>
+        </div>
+
+        <h3 class="sub-title">Les 3 étapes du formulaire</h3>
+
+        <div class="space-y-4 my-4">
+          <div class="flex gap-4 items-start p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="step-badge">1</div>
+            <div>
+              <div class="font-semibold text-slate-800 text-sm">Sélectionner le fichier JS</div>
+              <p class="text-xs mt-1">Clique sur <em>Parcourir…</em> et ouvre le fichier <code>.js</code>
+              généré par l'IA. Le script lit automatiquement l'identifiant, le titre du chapitre
+              et la notion.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="step-badge">2</div>
+            <div>
+              <div class="font-semibold text-slate-800 text-sm">Choisir la spécialité / classe</div>
+              <p class="text-xs mt-1">Sélectionne dans la liste la spécialité cible.
+              Si elle n'existe pas encore, clique sur <em>＋ Nouvelle spécialité</em>.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 items-start p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div class="step-badge">3</div>
+            <div>
+              <div class="font-semibold text-slate-800 text-sm">Choisir la section</div>
+              <p class="text-xs mt-1">Sélectionne la section thématique (ex. <em>Analyse</em>,
+              <em>Algèbre</em>…). Si elle n'existe pas, clique sur <em>＋ Nouvelle section</em>.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>Clique enfin sur <strong>⬇ Importer le module</strong>. Le script :</p>
+        <ul class="list-disc pl-6 space-y-1 text-sm">
+          <li>Copie le fichier JS dans le bon sous-dossier de <code>modules/</code></li>
+          <li>Ajoute l'entrée dans <code>assets/js/registry.js</code> (sidebar)</li>
+          <li>Ajoute la balise <code>&lt;script&gt;</code> dans <code>index.html</code></li>
+        </ul>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- NOUVELLE SPÉCIALITÉ -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="nouvelle-specialite" class="wiki-section">
+        <h2 class="section-title">Créer une nouvelle classe / spécialité</h2>
+
+        <p>
+          Une <strong>spécialité</strong> (ou <em>classe</em>) est le premier niveau de l'arborescence :
+          par exemple <em>Maths Spé — Terminale</em>, <em>1ère Spé</em>, <em>Tronc Commun</em>…
+          Elle apparaît comme un grand titre dans la barre latérale de l'appli.
+        </p>
+
+        <h3 class="sub-title">Via le script Python (recommandé)</h3>
+        <ol class="list-decimal pl-6 space-y-2 text-sm">
+          <li>Lance <code>import_module.py</code></li>
+          <li>À l'<strong>Étape 2</strong>, clique sur <strong>＋ Nouvelle spécialité</strong></li>
+          <li>Remplis les champs :<br>
+            <div class="overflow-x-auto mt-2">
+              <table>
+                <tr><th>Champ</th><th>Exemple</th><th>Rôle</th></tr>
+                <tr><td><strong>Nom *</strong></td><td><code>1ère Spé</code></td><td>Titre affiché dans la sidebar</td></tr>
+                <tr><td>Sous-titre</td><td><code>Première — Spécialité</code></td><td>Petit texte gris sous le titre</td></tr>
+                <tr><td>Icône (emoji)</td><td><code>📘</code></td><td>Icône à gauche du titre</td></tr>
+              </table>
+            </div>
+          </li>
+          <li>L'identifiant est généré automatiquement (ex. <code>1ere-spe</code>)</li>
+          <li>Clique <strong>✓ Créer la spécialité</strong></li>
+        </ol>
+
+        <h3 class="sub-title">Manuellement dans registry.js</h3>
+        <p>Dans <code>assets/js/registry.js</code>, ajoute un bloc à la fin du tableau <code>tree:</code> :</p>
+        <pre><code class="language-javascript">// Dans registry.js → tree: [ ..., ← ajouter ici
+{
+  id: '1ere-spe',
+  label: '1ère Spé',
+  sublabel: 'Première — Spécialité',
+  icon: '📘',
+  open: false,
+  sections: [],   // on ajoutera des sections ensuite
+},</code></pre>
+
+        <div class="callout tip">
+          <strong>Tip</strong>
+          <p>L'<code>id</code> doit être unique, en minuscules sans accents ni espaces
+          (seuls les tirets sont autorisés).</p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- NOUVELLE SECTION -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="nouvelle-section" class="wiki-section">
+        <h2 class="section-title">Créer une nouvelle section</h2>
+
+        <p>
+          Une <strong>section</strong> est un regroupement thématique de chapitres à l'intérieur
+          d'une spécialité — par exemple <em>Analyse</em>, <em>Algèbre &amp; Arithmétique</em>,
+          <em>Probabilités</em>…
+        </p>
+
+        <h3 class="sub-title">Via le script Python (recommandé)</h3>
+        <ol class="list-decimal pl-6 space-y-2 text-sm">
+          <li>Sélectionne d'abord la spécialité cible à l'<strong>Étape 2</strong></li>
+          <li>À l'<strong>Étape 3</strong>, clique sur <strong>＋ Nouvelle section</strong></li>
+          <li>Saisis le nom de la section (ex. <code>Probabilités</code>)</li>
+          <li>L'ID est généré : <code>1ere-spe-probabilites</code></li>
+          <li>Clique <strong>✓ Créer la section</strong></li>
+        </ol>
+
+        <h3 class="sub-title">Manuellement dans registry.js</h3>
+        <pre><code class="language-javascript">// Dans la spécialité cible, dans son tableau sections: [ ..., ← ajouter ici
+{
+  id: '1ere-spe-probabilites',
+  label: 'Probabilités',
+  open: true,
+  chapters: [],   // les modules s'ajouteront ici
+},</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- PRÉPARER LE CONTENU -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="preparer" class="wiki-section">
+        <h2 class="section-title">Étape 1 — Préparer son contenu</h2>
+
+        <p>
+          Avant de parler à l'IA, prépare ces 6 éléments sur papier ou dans un doc :
+        </p>
+
+        <div class="space-y-3 my-4">
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">A</span>
+            <div class="text-sm"><strong>Titre du chapitre</strong><br>
+            <span class="text-slate-500">ex. : <em>Calcul de limites — forme indéterminée ∞−∞</em></span></div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">B</span>
+            <div class="text-sm"><strong>Notion travaillée</strong> (une seule phrase)<br>
+            <span class="text-slate-500">ex. : <em>Lever une forme ∞−∞ en factorisant par le terme dominant</em></span></div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">C</span>
+            <div class="text-sm"><strong>Méthode étape par étape</strong> — exactement comme tu l'écrirais au tableau<br>
+            <span class="text-slate-500">Sois précis : l'IA implémentera <em>exactement</em> ce que tu décris.</span></div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">D</span>
+            <div class="text-sm"><strong>Variables aléatoires</strong> : noms, types (entier/réel), plages, contraintes<br>
+            <span class="text-slate-500">ex. : <em>a : entier dans [2, 8], n : entier dans [2, 5]</em></span></div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">E</span>
+            <div class="text-sm"><strong>Exemple d'énoncé</strong> avec de vraies valeurs numériques</div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2 py-1 rounded flex-shrink-0">F</span>
+            <div class="text-sm"><strong>Correction complète</strong> de cet exemple, étape par étape</div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <strong>Pourquoi être précis ?</strong>
+          <p>L'IA est capable d'inventer une méthode correcte mais différente de la tienne.
+          En fournissant un exemple complet, tu garantis que le code généré enseigne
+          exactement ce que tu as prévu.</p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- MEGA-PROMPT -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="mega-prompt" class="wiki-section">
+        <h2 class="section-title">Étape 2 — Mega-prompt à donner à l'IA</h2>
+
+        <p>
+          Copie <strong>l'intégralité</strong> du texte ci-dessous dans ChatGPT, Claude ou toute
+          autre IA, puis remplace les parties entre <code>[crochets]</code> par ton contenu.
+        </p>
+
+        <div class="callout tip">
+          <strong>Astuce</strong>
+          <p>Utilise le bouton "Copier" en haut à droite du bloc de code,
+          ou sélectionne tout le texte avec Ctrl+A dans la zone.</p>
+        </div>
+
+        <pre><code class="language-text">===========================================================================
+Tu es un développeur JavaScript spécialisé en mathématiques de lycée (Terminale française).
+
+Je veux que tu génères un module d'exercice pour un outil web de révision.
+L'outil utilise les bibliothèques déjà chargées (KaTeX, Alpine.js).
+Un objet global `Engine` est disponible avec ces utilitaires :
+
+  Engine.randInt(min, max)           → entier aléatoire dans [min, max]
+  Engine.gcd(a, b)                   → PGCD de a et b
+  Engine.lcm(a, b)                   → PPCM de a et b
+  Engine.reduceFraction(num, den)    → {num, den} fraction irréductible
+  Engine.latexFraction(num, den)     → chaîne LaTeX : "\dfrac{n}{d}" ou "n"
+  Engine.randIntWhere(min, max, fn)  → entier satisfaisant fn(v) === true
+  Engine.coprimePair(minQ, maxP)     → {p, q} avec pgcd(p,q)=1 et p>q≥minQ
+  Engine.euclidSteps(a, b)           → {steps, pgcd} de l'algorithme d'Euclide
+  Engine.shuffle(array)              → copie mélangée du tableau
+
+FORMAT OBLIGATOIRE — le fichier doit contenir exactement ceci :
+
+MathsTrainer.register({
+  id: 'identifiant-sans-espaces-ni-accents',
+  chapitre: 'Titre affiché',
+  notion: 'Une phrase décrivant ce que l\'élève apprend à faire',
+  methode: [
+    'Étape 1 avec $LaTeX$ si besoin.',
+    'Étape 2...',
+  ],
+  generate() {
+    const enonce = `...texte avec $LaTeX$ inline et $$LaTeX$$ en bloc...`;
+    const correction = `...HTML avec $LaTeX$ et $$LaTeX$$...`;
+    return { enonce, correction };
+  },
+});
+
+RÈGLES LATEX DANS LES CHAÎNES JAVASCRIPT :
+- Formule inline       : $formule$
+- Bloc display centré  : $$formule$$
+- Tout \ LaTeX devient \\ en JS  (ex: \frac → \\frac, \times → \\times)
+- Saut de ligne dans aligned : \\\\ en JS
+- Macros disponibles sans les redéfinir : \\pgcd  \\ppcm  \\N  \\Z  \\R  \\Q  \\C
+
+HTML AUTORISÉ dans la correction :
+  &lt;p&gt;texte&lt;/p&gt;
+  &lt;strong&gt;texte&lt;/strong&gt;
+  &lt;div class="my-4 overflow-x-auto"&gt;$$...$$&lt;/div&gt;      ← pour un bloc display
+  &lt;div class="result-highlight"&gt;$$résultat final$$&lt;/div&gt;  ← encadre le résultat
+
+IMPORTANT :
+- N'invente PAS la méthode : implémente EXACTEMENT les étapes que je fournis
+- Génère UNIQUEMENT le contenu du fichier JS, sans explications avant ni après
+- L'id doit être en minuscules, sans espaces, sans accents (tirets autorisés)
+
+VOICI LE CHAPITRE À IMPLÉMENTER :
+
+CHAPITRE: [écrire le nom du chapitre ici]
+NOTION: [une phrase]
+
+MÉTHODE:
+Étape 1 — [ta description]
+Étape 2 — [ta description]
+Étape 3 — [ta description]
+(ajouter autant d'étapes que nécessaire)
+
+VARIABLES:
+[nom]: entier, plage [min, max]
+[nom]: entier, plage [min, max], contrainte : [décrire]
+
+ÉNONCÉ EXEMPLE (avec des vraies valeurs) :
+[coller ici un exemple d'énoncé complet avec des valeurs concrètes]
+
+CORRECTION EXEMPLE (de l'énoncé ci-dessus) :
+[coller ici la correction complète, étape par étape]
+===========================================================================</code></pre>
+
+        <h3 class="sub-title">Exemple rempli</h3>
+        <pre><code class="language-text">CHAPITRE: Suites géométriques — terme général
+NOTION: Calculer un terme u_n connaissant u_0 et la raison q
+
+MÉTHODE:
+Étape 1 — Rappeler la formule : u_n = u_0 × q^n
+Étape 2 — Substituer u_0, q et n
+Étape 3 — Calculer q^n puis multiplier par u_0
+
+VARIABLES:
+u0 : entier dans [1, 10]
+q  : entier dans [2, 5]
+n  : entier dans [2, 5]
+(contrainte : u0 × q^n ≤ 10 000 pour rester lisible)
+
+ÉNONCÉ EXEMPLE :
+Soit (u_n) une suite géométrique de premier terme u_0 = 3 et de raison q = 2.
+Calculer u_4.
+
+CORRECTION EXEMPLE :
+On applique la formule : u_n = u_0 × q^n
+Donc u_4 = 3 × 2^4 = 3 × 16 = 48</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- VÉRIFIER -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="verifier" class="wiki-section">
+        <h2 class="section-title">Étape 3 — Vérifier le code généré</h2>
+
+        <p>Avant d'importer, vérifie rapidement que le module respecte le format :</p>
+
+        <table>
+          <tr><th>Vérification</th><th>À chercher dans le code</th></tr>
+          <tr>
+            <td>✅ Commence bien</td>
+            <td><code>MathsTrainer.register({</code></td>
+          </tr>
+          <tr>
+            <td>✅ Champs présents</td>
+            <td><code>id:</code>, <code>chapitre:</code>, <code>notion:</code>, <code>methode:</code>, <code>generate()</code></td>
+          </tr>
+          <tr>
+            <td>✅ Se termine bien</td>
+            <td><code>});</code> seul sur la dernière ligne</td>
+          </tr>
+          <tr>
+            <td>✅ Méthode correcte</td>
+            <td>Les étapes correspondent à ce que tu as écrit</td>
+          </tr>
+          <tr>
+            <td>✅ Retour valide</td>
+            <td><code>return { enonce, correction };</code> dans <code>generate()</code></td>
+          </tr>
+        </table>
+
+        <div class="callout warn">
+          <strong>Si quelque chose cloche</strong>
+          <p>Dis à l'IA : <em>"Relance la génération en respectant exactement la méthode que j'ai fournie,
+          et génère uniquement le code JS sans commentaires autour."</em></p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- IMPORTER -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="importer" class="wiki-section">
+        <h2 class="section-title">Étape 4 — Importer le module</h2>
+
+        <p>Deux approches : le script Python (recommandé) ou la méthode manuelle.</p>
+
+        <h3 class="sub-title">Avec le script Python</h3>
+        <ol class="list-decimal pl-6 space-y-2 text-sm">
+          <li>Sauvegarde le code généré par l'IA dans un fichier <code>.js</code> n'importe où sur ton ordinateur</li>
+          <li>Lance <code>import_module.py</code></li>
+          <li>Étape 1 → <em>Parcourir…</em> → sélectionne ton fichier</li>
+          <li>Étape 2 → choisis la spécialité</li>
+          <li>Étape 3 → choisis la section</li>
+          <li>Clique <strong>⬇ Importer le module</strong></li>
+        </ol>
+
+        <h3 class="sub-title">Manuellement</h3>
+        <p>Voir la section <a href="#manuel" class="text-blue-600 underline">Méthode manuelle</a> ci-dessous.</p>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- TESTER -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="tester" class="wiki-section">
+        <h2 class="section-title">Étape 5 — Tester le module</h2>
+
+        <ol class="list-decimal pl-6 space-y-2 text-sm">
+          <li>Double-clique sur <code>index.html</code> — il s'ouvre dans le navigateur</li>
+          <li>Dans la sidebar, trouve ton chapitre — il doit apparaître sans badge <em>bientôt</em></li>
+          <li>Clique dessus — l'exercice doit se générer</li>
+          <li>Clique sur <strong>Nouvel exercice</strong> plusieurs fois (5–6 fois minimum) pour vérifier que toutes les valeurs produites sont correctes</li>
+          <li>Vérifie la correction en cliquant sur <strong>Voir la correction</strong></li>
+        </ol>
+
+        <div class="callout tip">
+          <strong>Test rapide de qualité</strong>
+          <p>Génère ~10 exercices et vérifie : les valeurs sont-elles raisonnables ?
+          Les calculs dans la correction sont-ils exacts ? La mise en forme est-elle propre ?</p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- MÉTHODE MANUELLE -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="manuel" class="wiki-section">
+        <h2 class="section-title">Méthode manuelle (VS Code)</h2>
+
+        <p>Pour les utilisateurs à l'aise avec l'édition de code.</p>
+
+        <h3 class="sub-title">1. Créer le fichier JS</h3>
+        <ol class="list-decimal pl-6 space-y-1 text-sm">
+          <li>Dans VS Code, ouvre le dossier <strong>Maths trainer</strong> (<em>Fichier → Ouvrir un dossier</em>)</li>
+          <li>Dans l'arborescence, <strong>clic droit</strong> sur <code>modules/maths-spe/</code> → <em>Nouveau fichier</em></li>
+          <li>Nomme-le avec l'<code>id</code> du module : ex. <code>suites-geo.js</code></li>
+          <li>Colle le code généré par l'IA → <strong>Ctrl+S</strong></li>
+        </ol>
+
+        <h3 class="sub-title">2. Ajouter la balise script dans index.html</h3>
+        <ol class="list-decimal pl-6 space-y-1 text-sm">
+          <li>Ouvre <code>index.html</code></li>
+          <li>Cherche (<strong>Ctrl+F</strong>) : <code>/MODULES</code></li>
+          <li>Juste avant la ligne <code>&lt;!-- /MODULES --&gt;</code>, ajoute :</li>
+        </ol>
+        <pre><code class="language-html">  &lt;script src="modules/maths-spe/suites-geo.js"&gt;&lt;/script&gt;
+  &lt;!-- /MODULES --&gt;</code></pre>
+
+        <h3 class="sub-title">3. Ajouter le chapitre dans registry.js</h3>
+        <ol class="list-decimal pl-6 space-y-1 text-sm">
+          <li>Ouvre <code>assets/js/registry.js</code></li>
+          <li>Cherche la section cible (ex. <code>spe-analyse</code>)</li>
+          <li>Dans son tableau <code>chapters:</code>, ajoute une ligne :</li>
+        </ol>
+        <pre><code class="language-javascript">chapters: [
+  // ... chapitres existants ...
+  { id: 'suites-geo', label: 'Suites géométriques — terme général' },
+],</code></pre>
+
+        <div class="callout danger">
+          <strong>Attention</strong>
+          <p>L'<code>id</code> dans <code>registry.js</code> doit être <strong>exactement identique</strong>
+          à l'<code>id:</code> déclaré dans le fichier JS du module — casse, tirets compris.</p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- FORMAT DU MODULE JS -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="format-module" class="wiki-section">
+        <h2 class="section-title">Format du module JS — référence complète</h2>
+
+        <pre><code class="language-javascript">MathsTrainer.register({
+
+  // ── Identifiant ────────────────────────────────────────────────────────
+  // Même valeur que l'entrée dans registry.js.
+  // Minuscules, sans espaces ni accents, tirets autorisés.
+  id: 'mon-module',
+
+  // ── Affiché dans l'interface ────────────────────────────────────────────
+  chapitre: 'Titre complet affiché en haut de la page',
+  notion:   'Une phrase décrivant ce que l\'élève s\'entraîne à faire.',
+
+  // ── Méthode ─────────────────────────────────────────────────────────────
+  // Tableau de strings. Chaque string = une étape numérotée.
+  // Supporte HTML inline et LaTeX entre $...$ (rendu par KaTeX).
+  methode: [
+    'Étape 1 — reconnaître le type de $f$ : polynôme, $\\sin$, $e^x$…',
+    'Étape 2 — trouver une primitive $F$ vérifiant $F\'(x) = f(x)$.',
+    'Étape 3 — calculer $F(b) - F(a)$ et simplifier.',
+  ],
+
+  // ── Générateur d'exercice ────────────────────────────────────────────────
+  // Appelé à chaque "Nouvel exercice".
+  // Doit renvoyer EXACTEMENT { enonce, correction } (deux chaînes).
+  generate() {
+
+    // Variables aléatoires
+    const a = Engine.randInt(1, 5);
+    const n = Engine.randInt(2, 4);
+
+    // Énoncé — texte avec LaTeX inline $...$
+    const enonce = `Calculer $\\displaystyle\\int_0^1 ${a}x^{${n}}\\,dx$.`;
+
+    // Correction — HTML avec LaTeX $...$ et $$...$$
+    const correction =
+      `&lt;p&gt;La primitive de $f(x) = ${a}x^{${n}}$ est
+           $F(x) = ${Engine.latexFraction(a, n+1)}x^{${n+1}}$.&lt;/p&gt;` +
+      `&lt;div class="my-4 overflow-x-auto"&gt;
+         $$\\begin{aligned}
+           \\int_0^1 ${a}x^{${n}}\\,dx &amp;= \\Bigl[F(x)\\Bigr]_0^1 \\\\
+                                        &amp;= ${Engine.latexFraction(a, n+1)}
+         \\end{aligned}$$
+       &lt;/div&gt;` +
+      `&lt;div class="result-highlight"&gt;$$\\text{résultat} = ${Engine.latexFraction(a, n+1)}$$&lt;/div&gt;`;
+
+    return { enonce, correction };
+  },
+
+});</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- ENGINE API -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="engine-api" class="wiki-section">
+        <h2 class="section-title">API Engine — référence</h2>
+
+        <p>L'objet <code>Engine</code> est disponible globalement dans tous les modules.</p>
+
+        <table>
+          <tr>
+            <th>Méthode</th>
+            <th>Retour</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td><code>Engine.randInt(min, max)</code></td>
+            <td><code>number</code></td>
+            <td>Entier aléatoire dans [min, max] inclus</td>
+          </tr>
+          <tr>
+            <td><code>Engine.gcd(a, b)</code></td>
+            <td><code>number</code></td>
+            <td>PGCD de a et b (algorithme d'Euclide)</td>
+          </tr>
+          <tr>
+            <td><code>Engine.lcm(a, b)</code></td>
+            <td><code>number</code></td>
+            <td>PPCM de a et b</td>
+          </tr>
+          <tr>
+            <td><code>Engine.reduceFraction(num, den)</code></td>
+            <td><code>{ num, den }</code></td>
+            <td>Fraction irréductible</td>
+          </tr>
+          <tr>
+            <td><code>Engine.latexFraction(num, den)</code></td>
+            <td><code>string</code></td>
+            <td>Renvoie <code>"n"</code> si den=1, sinon <code>"\\dfrac{n}{d}"</code></td>
+          </tr>
+          <tr>
+            <td><code>Engine.randIntWhere(min, max, fn)</code></td>
+            <td><code>number</code></td>
+            <td>Entier dans [min,max] satisfaisant <code>fn(v) === true</code></td>
+          </tr>
+          <tr>
+            <td><code>Engine.coprimePair(minQ, maxP)</code></td>
+            <td><code>{ p, q }</code></td>
+            <td>Paire première entre elle avec p &gt; q ≥ minQ</td>
+          </tr>
+          <tr>
+            <td><code>Engine.euclidSteps(a, b)</code></td>
+            <td><code>{ steps, pgcd }</code></td>
+            <td>Étapes de l'algorithme d'Euclide (voir pgcd.js)</td>
+          </tr>
+          <tr>
+            <td><code>Engine.signedInt(n, isFirst)</code></td>
+            <td><code>string</code></td>
+            <td><code>"+3"</code> ou <code>"-3"</code> selon le signe et la position</td>
+          </tr>
+          <tr>
+            <td><code>Engine.shuffle(array)</code></td>
+            <td><code>array</code></td>
+            <td>Copie mélangée (Fisher-Yates) — utile pour les QCM</td>
+          </tr>
+        </table>
+
+        <h3 class="sub-title">Exemples d'usage</h3>
+        <pre><code class="language-javascript">// Entier aléatoire
+const a = Engine.randInt(2, 10);   // ex. 7
+
+// Fraction aléatoire irréductible
+const { p, q } = Engine.coprimePair(2, 9);  // ex. {p: 7, q: 3}
+const frac = Engine.latexFraction(p, q);    // "\\dfrac{7}{3}"
+
+// Contrainte : a pair
+const a = Engine.randIntWhere(2, 20, v => v % 2 === 0);
+
+// Étapes Euclide
+const { steps, pgcd } = Engine.euclidSteps(48, 18);
+// steps[0] = { dividend: 48, divisor: 18, quotient: 2, remainder: 12 }</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- LATEX -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="latex" class="wiki-section">
+        <h2 class="section-title">LaTeX dans les chaînes JavaScript</h2>
+
+        <div class="callout info">
+          <strong>Règle fondamentale</strong>
+          <p>Dans une chaîne JS, chaque <code>\</code> LaTeX s'écrit <code>\\</code>.
+          Donc <code>\frac</code> devient <code>\\frac</code>, et le saut de ligne LaTeX
+          <code>\\</code> devient <code>\\\\</code>.</p>
+        </div>
+
+        <h3 class="sub-title">Tableau de conversion</h3>
+        <table>
+          <tr><th>Tu veux écrire en LaTeX</th><th>Tu écris dans JS</th></tr>
+          <tr><td><code>\frac{a}{b}</code></td><td><code>\\frac{a}{b}</code></td></tr>
+          <tr><td><code>\dfrac{a}{b}</code></td><td><code>\\dfrac{a}{b}</code></td></tr>
+          <tr><td><code>\times</code></td><td><code>\\times</code></td></tr>
+          <tr><td><code>\sqrt{x}</code></td><td><code>\\sqrt{x}</code></td></tr>
+          <tr><td><code>\int_a^b</code></td><td><code>\\int_a^b</code></td></tr>
+          <tr><td><code>\begin{aligned}</code></td><td><code>\\begin{aligned}</code></td></tr>
+          <tr><td><code>\\</code> (saut de ligne dans aligned)</td><td><code>\\\\</code></td></tr>
+          <tr><td><code>\displaystyle</code></td><td><code>\\displaystyle</code></td></tr>
+          <tr><td><code>\operatorname{pgcd}</code></td><td><code>\\operatorname{pgcd}</code></td></tr>
+        </table>
+
+        <h3 class="sub-title">Modes d'affichage</h3>
+        <table>
+          <tr><th>Mode</th><th>Syntaxe JS</th><th>Rendu</th></tr>
+          <tr>
+            <td>Inline (dans le texte)</td>
+            <td><code>`La valeur de $a^2$ est…`</code></td>
+            <td>La valeur de <em>a²</em> est…</td>
+          </tr>
+          <tr>
+            <td>Bloc centré</td>
+            <td><code>`$$\\frac{a}{b}$$`</code></td>
+            <td>Fraction centrée sur sa propre ligne</td>
+          </tr>
+          <tr>
+            <td>Bloc aligné</td>
+            <td><code>`$$\\begin{aligned} a &amp;= b \\\\ c &amp;= d \\end{aligned}$$`</code></td>
+            <td>Calculs alignés sur le signe <code>=</code></td>
+          </tr>
+        </table>
+
+        <h3 class="sub-title">Macros pré-définies</h3>
+        <table>
+          <tr><th>Macro JS</th><th>Rendu</th><th>À utiliser pour</th></tr>
+          <tr><td><code>\\pgcd</code></td><td>pgcd (romain)</td><td>PGCD de deux entiers</td></tr>
+          <tr><td><code>\\ppcm</code></td><td>ppcm (romain)</td><td>PPCM de deux entiers</td></tr>
+          <tr><td><code>\\N</code></td><td>ℕ</td><td>Entiers naturels</td></tr>
+          <tr><td><code>\\Z</code></td><td>ℤ</td><td>Entiers relatifs</td></tr>
+          <tr><td><code>\\R</code></td><td>ℝ</td><td>Réels</td></tr>
+          <tr><td><code>\\Q</code></td><td>ℚ</td><td>Rationnels</td></tr>
+          <tr><td><code>\\C</code></td><td>ℂ</td><td>Complexes</td></tr>
+        </table>
+
+        <h3 class="sub-title">Exemple de correction complète</h3>
+        <pre><code class="language-javascript">const correction =
+  `&lt;p&gt;On développe le calcul :&lt;/p&gt;` +
+  `&lt;div class="my-4 overflow-x-auto"&gt;` +
+  `$$\\begin{aligned}` +
+  `  ${a}^{${n}} &amp;= ${Array(n).fill(a).join(' \\\\times ')} \\\\` +
+  `              &amp;= ${Math.pow(a, n)}` +
+  `\\end{aligned}$$` +
+  `&lt;/div&gt;` +
+  `&lt;div class="result-highlight"&gt;$$${a}^{${n}} = ${Math.pow(a, n)}$$&lt;/div&gt;`;</code></pre>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- CSS CLASSES -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="css-classes" class="wiki-section">
+        <h2 class="section-title">Classes CSS disponibles dans la correction</h2>
+
+        <table>
+          <tr><th>Classe</th><th>Usage</th><th>Aperçu</th></tr>
+          <tr>
+            <td><code>result-highlight</code></td>
+            <td>Encadre le résultat final avec un fond jaune</td>
+            <td><div class="result-highlight text-sm px-3 py-1">$$a^n = 8$$</div></td>
+          </tr>
+          <tr>
+            <td><code>my-4 overflow-x-auto</code></td>
+            <td>Bloc display centré avec défilement horizontal si formule large</td>
+            <td><code class="text-xs">&lt;div class="my-4 overflow-x-auto"&gt;$$...$$&lt;/div&gt;</code></td>
+          </tr>
+          <tr>
+            <td><code>mt-1 text-xs text-slate-500</code></td>
+            <td>Petite note grise sous un bloc de calcul</td>
+            <td><span class="text-xs text-slate-500">On utilise ln(e) = 1 et ln(1) = 0.</span></td>
+          </tr>
+        </table>
+
+        <div class="callout tip">
+          <strong>Toutes les classes Tailwind sont utilisables</strong>
+          <p>L'application charge Tailwind CSS en CDN. Tu peux donc utiliser n'importe quelle
+          classe utilitaire Tailwind dans le HTML de ta correction :
+          <code>font-bold</code>, <code>text-blue-600</code>, <code>border</code>, etc.</p>
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- DÉPANNAGE -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <section id="depannage" class="wiki-section">
+        <h2 class="section-title">Dépannage</h2>
+
+        <div class="space-y-6">
+
+          <div>
+            <h3 class="sub-title">Le chapitre apparaît avec le badge "bientôt"</h3>
+            <p class="text-sm">L'<code>id</code> dans <code>registry.js</code> et l'<code>id:</code>
+            dans le fichier JS ne correspondent pas exactement. Vérifie les majuscules et les tirets.</p>
+            <pre><code class="language-javascript">// registry.js
+{ id: 'pgcd', label: '...' }    ← doit être identique ↓
+
+// pgcd.js
+MathsTrainer.register({ id: 'pgcd', ... })</code></pre>
+          </div>
+
+          <div>
+            <h3 class="sub-title">Page blanche ou écran d'erreur au chargement</h3>
+            <p class="text-sm">Ouvre la console du navigateur avec <strong>F12</strong> → onglet
+            <strong>Console</strong>. L'erreur rouge indique le fichier et la ligne problématiques.
+            Copie ce message et donne-le à l'IA :</p>
+            <div class="callout tip">
+              <strong>Prompt de correction rapide</strong>
+              <p><em>"J'ai ce message d'erreur dans la console du navigateur, corrige le fichier JS : [message d'erreur]"</em></p>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="sub-title">Les formules n'apparaissent pas (tu vois le LaTeX brut)</h3>
+            <p class="text-sm">KaTeX se charge via internet (CDN). Vérifie ta connexion internet
+            et recharge la page. Si tu travailles hors-ligne, télécharge KaTeX localement.</p>
+          </div>
+
+          <div>
+            <h3 class="sub-title">Le script Python ne se lance pas</h3>
+            <p class="text-sm">Python 3 n'est pas installé ou n'est pas dans le PATH.</p>
+            <ol class="list-decimal pl-6 space-y-1 text-sm mt-2">
+              <li>Télécharge Python 3 sur <code>python.org</code></li>
+              <li>Lors de l'installation Windows, coche <strong>"Add Python to PATH"</strong></li>
+              <li>Relance le script</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="sub-title">Le script Python dit "Dossier incorrect"</h3>
+            <p class="text-sm">Le fichier <code>import_module.py</code> doit se trouver
+            dans le même dossier que <code>index.html</code>.
+            Ne le déplace pas dans un sous-dossier.</p>
+          </div>
+
+          <div>
+            <h3 class="sub-title">Les valeurs générées sont parfois impossibles</h3>
+            <p class="text-sm">L'IA a choisi des plages trop larges. Ouvre le fichier JS,
+            repère les <code>Engine.randInt()</code> et ajuste les bornes.
+            Utilise <code>Engine.randIntWhere()</code> pour ajouter une contrainte :</p>
+            <pre><code class="language-javascript">// Forcer un résultat ≤ 100
+const n = Engine.randIntWhere(2, 5, v => u0 * Math.pow(q, v) &lt;= 100);</code></pre>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <!-- FOOTER -->
+      <!-- ─────────────────────────────────────────────────────────────────── -->
+      <footer class="pt-8 mt-8 border-t border-slate-200 text-center text-xs text-slate-400">
+        Maths Trainer — 100&nbsp;% local, aucune donnée envoyée &mdash;
+        <a href="index.html" class="text-blue-500 hover:underline">Retour à l'appli</a>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- KaTeX rendu -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <!-- Prism syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+
+  <script>
+    // ── KaTeX auto-render ────────────────────────────────────────────────────
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$',  right: '$',  display: false },
+      ],
+      throwOnError: false,
+    });
+
+    // ── Sidebar active state on scroll ───────────────────────────────────────
+    const navLinks = document.querySelectorAll('#wiki-nav a[href^="#"]');
+    const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href')));
+
+    function updateActive() {
+      let current = sections[0];
+      for (const sec of sections) {
+        if (sec && sec.getBoundingClientRect().top <= 80) current = sec;
+      }
+      navLinks.forEach(a => {
+        a.classList.toggle('active', current && a.getAttribute('href') === '#' + current.id);
+      });
+    }
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  </script>
+</body>
+</html>
